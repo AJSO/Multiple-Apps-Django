@@ -45,15 +45,45 @@
                   <div class="row no-gutters align-items-center">
                     <div class="col-md-12 mr-2">
                       <form id="task-form" method="POST">
-                      {% csrf_token %}
+                      {% csrf_token %} <!-- csrf token for basic security -->
                         <div class="col-md-12">
                             <div class="form-group">
                                <label>Add Todo Item</label>
-                                <input type="text" name="tasks" class="form-control" placeholder="Task">
-                                </div>
-                                <button type="submit" class="btn btn-info btn-fill pull-right">Add Task</button>
-                            <div class="clearfix"></div>
+                                <input type="text" id="description" class="taskName form-control" placeholder="What do you need to do?" name="description" required>
                             </div>
+                            <div class="form-group">
+                                  <label for="category">Category</label>
+                                  <i class="fa fa-caret-down selectArrow"></i>
+                                  <select id="category" class="form-control" name="category_select">
+                                  <option class="disabled" value="">Choose a category</option>
+                                  {% for category in categories %}
+                                      <option class="" value="{{ category.name }}" name="{{ category.name }}">{{ category.name }}</option>
+                                  {% endfor %}
+                                  </select>
+                              </div>
+                              <div class="form-group half last right">
+                                  <label for="dueDate">Due Date</label>
+                                  <input type="date" id="dueDate" class="form-control" name="date">   
+                              </div>
+                              <div class="row">
+                                  <button class="taskAdd btn btn-info btn-fill" name="taskAdd" type="submit"><i class="fa fa-plus icon"></i>Add task</button>
+                                  <button class="taskDelete btn btn-info btn-fill" name="taskDelete" formnovalidate="" type="submit" onclick="$('input#sublist').click();"><i class="fa fa-trash-o icon"></i>Delete Tasks</button>
+                              </div>
+                            <div class="clearfix"></div>
+
+                            {% comment %} Task List start {% endcomment %}
+                            <ul  class="taskList">
+                              {% for todo in todos %} <!-- django template lang - for loop -->
+                                  <li class="taskItem">
+                                      <input type="checkbox" class="taskCheckbox" name="checkedbox" id="{{ todo.id }}" value="{{ todo.id }}">
+                                      <label for="{{ todo.id }}"><span class="complete-">{{ todo.title }}</span></label>
+                                      <span class="category-{{ todo.category }}">{{ todo.category }}</span>
+                                      <strong class="taskDate"><i class="fa fa-calendar"></i>{{ todo.created }} - {{ todo.due_date }}</strong>
+                                  </li>
+                              {% endfor %}
+                              
+                              </ul>
+                          </div>
                         </form>
                      </div>
                   </div>
@@ -173,4 +203,6 @@
       </div>
     </div>
   </div>
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 {% endblock content %}
