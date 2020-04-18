@@ -14,7 +14,7 @@ from user.models import Profile
 @login_required
 def index(request):
     author = get_object_or_404(Profile, user=request.user)
-    todos = Task.objects.all() #quering all todos with the object manager
+    todos = Task.objects.filter(task_author=request.user) #quering all todos with the object manager
     categories = Category.objects.all() #getting all categories with object manager
     if request.method == "POST": #checking if the request method is a POST
         if "taskAdd" in request.POST: #checking if there is a request to add a todo
