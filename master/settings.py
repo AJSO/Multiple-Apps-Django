@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     # custom apps
     'user.apps.UserConfig',
     'usertodo.apps.UsertodoConfig',
+    'mybudget.apps.MybudgetConfig',
 ]
 
 MIDDLEWARE = [

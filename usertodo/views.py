@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect,get_object_or_404
 from django.contrib.auth.decorators import login_required
 from .models import *
 import datetime
-from user.models import Profile
+from user.models import Profile, ProfilePic
 
 # def get_author(user):
 
@@ -14,6 +14,7 @@ from user.models import Profile
 @login_required
 def index(request):
     author = get_object_or_404(Profile, user=request.user)
+    profilepic = get_object_or_404(ProfilePic, user=request.user)
     todos = Task.objects.filter(task_author=request.user) #quering all todos with the object manager
     categories = Category.objects.all() #getting all categories with object manager
     if request.method == "POST": #checking if the request method is a POST
@@ -32,10 +33,13 @@ def index(request):
             for todo_id in checkedlist:
                 todo = Task.objects.get(id=int(todo_id)) #getting todo id
                 todo.delete() #deleting todo
+
+    
     context = {
 
         "todos": todos, 
-        "categories":categories
+        "categories":categories, 
+        'profilepic':profilepic,   
     }
 
     return render(request, 'usertodo/index.html', context)
