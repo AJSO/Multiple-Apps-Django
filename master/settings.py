@@ -42,6 +42,11 @@ INSTALLED_APPS = [
     'user.apps.UserConfig',
     'usertodo.apps.UsertodoConfig',
     'mybudget.apps.MybudgetConfig',
+    'transactions.apps.TransactionsConfig',
+    'accounts.apps.AccountsConfig',
+
+
+    # AccountsConfig
 ]
 
 MIDDLEWARE = [

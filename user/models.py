@@ -18,7 +18,7 @@ class Profile(models.Model):
     postal_code = models.CharField(max_length=35)
     about = models.TextField()
 
-    
+    @receiver(post_save, sender=User)
     def create_user_profile(sender, **kwargs):
         if kwargs['created']:
             user_profile = Profile.objects.create(user=kwargs['instance'])
@@ -42,7 +42,7 @@ class ProfilePic(models.Model):
     #         img.thumbnail(output_size)
     #         img.save(self.image.path) 
 
-    
+    @receiver(post_save, sender=User)
     def create_user_profile_pic(sender, **kwargs):
         if kwargs['created']:
             user_profile = ProfilePic.objects.create(user=kwargs['instance'])
